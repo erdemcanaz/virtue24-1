@@ -68,16 +68,14 @@ def detect_and_return_results_detect(cv2_frame:np.ndarray = None, yolo_object:YO
     
     return formatted_detections
 
-if __name__ == "_main_":
-    
-    ''' cv2_frame = cv2.imread("santiye.jpeg")
-    formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = True)
-    pprint.pprint(formatted_detection_results) '''
+''' cv2_frame = cv2.imread("santiye.jpeg")
+formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = True)
+pprint.pprint(formatted_detection_results) '''
 
-    cv2_frame = cv2.imread("zoomed.jpeg")
-    formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = False, save = False)
-    pprint.pprint(formatted_detection_results)
+cv2_frame = cv2.imread("zoomed.jpeg")
+formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = False, save = False)
+pprint.pprint(formatted_detection_results)
 
-    ''' cv2_frame = cv2.imread("construction.png")
-    formatted_detection_results = detect_and_return_results_detect(cv2_frame= cv2_frame, yolo_object= unknown_detector, threshold_confidence= 0.0, show = True)
-    pprint.pprint(formatted_detection_results) '''
+''' cv2_frame = cv2.imread("construction.png")
+formatted_detection_results = detect_and_return_results_detect(cv2_frame= cv2_frame, yolo_object= unknown_detector, threshold_confidence= 0.0, show = True)
+pprint.pprint(formatted_detection_results) '''
