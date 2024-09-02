@@ -1,17 +1,23 @@
 from ultralytics import YOLO
+import torch
 import numpy as np
 import cv2
 import pprint, time
+
+''' print(f"torch.cuda.device_count(): {torch.cuda.device_count()}")
+#torch.cuda.set_device(0) # Set to your desired GPU number
+print("torch.cuda.is_available()",torch.cuda.is_available()) '''
 
 default_models = ["yolov8n-pose.pt", "yolov8s-pose.pt", "yolov8m-pose.pt", "yolov8l-pose.pt", "yolov8x-pose.pt"] 
 pose_detector = YOLO( default_models[0], verbose= True)    
 unknown_detector = YOLO("bestest.pt", verbose= True)    
 
-def detect_and_return_results_pose(cv2_frame:np.ndarray = None, yolo_object:YOLO = None, show=False, threshold_confidence = 0.5):
+def detect_and_return_results_pose(cv2_frame:np.ndarray = None, yolo_object:YOLO = None, show=False, save=False, threshold_confidence = 0.5):
     KEYPOINT_NAMES = ["nose", "right_eye", "left_eye", "left_ear", "right_ear", "left_shoulder", "right_shoulder", "left_elbow" ,"right_elbow","left_wrist", "right_wrist", "left_hip", "right_hip", "left_knee", "right_knee", "left_ankle", "right_ankle"]
     
     formatted_detections = []
-    detections = yolo_object(cv2_frame, task = "pose", verbose= True, show = show)[0]
+    detections = yolo_object(cv2_frame, task = "pose", verbose= True, show = show, save = save)[0]
+    time.sleep(10)
     for detection in detections:
         boxes = detection.boxes
         box_cls_no = int(boxes.cls.cpu().numpy()[0])
@@ -62,12 +68,16 @@ def detect_and_return_results_detect(cv2_frame:np.ndarray = None, yolo_object:YO
     
     return formatted_detections
 
-if __name__ == "__main__":
+if __name__ == "_main_":
     
-    cv2_frame = cv2.imread("tunişko_erdem.png")
-    formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = False)
+    ''' cv2_frame = cv2.imread("santiye.jpeg")
+    formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = True)
+    pprint.pprint(formatted_detection_results) '''
+
+    cv2_frame = cv2.imread("zoomed.jpeg")
+    formatted_detection_results = detect_and_return_results_pose(cv2_frame= cv2_frame, yolo_object= pose_detector, threshold_confidence= 0.5, show = False, save = False)
     pprint.pprint(formatted_detection_results)
 
-    cv2_frame = cv2.imread("construction.png")
+    ''' cv2_frame = cv2.imread("construction.png")
     formatted_detection_results = detect_and_return_results_detect(cv2_frame= cv2_frame, yolo_object= unknown_detector, threshold_confidence= 0.0, show = True)
-    pprint.pprint(formatted_detection_results)
+    pprint.pprint(formatted_detection_results) '''
